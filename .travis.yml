@@ -1,0 +1,35 @@
+sudo: required #permission
+services:
+  - docker
+
+before_install:
+  - docker build -t sami93/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true sami93/react-test npm run test -- --coverage #coverage to exit tests suits
+
+after_success:
+  - docker build -t sami93/multi-client ./client
+  - docker build -t sami93/multi-nginx ./nginx
+  - docker build -t sami93/multi-server ./server
+  - docker build -t sami93/multi-worker ./worker
+  # Log in docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push sami93/multi-client
+  - docker push sami93/multi-nginx
+  - docker push sami93/multi-server
+  - docker push sami93/multi-worker
+
+# deploy:
+#   edge: true
+#   provider: elasticbeanstalk
+#   region: "us-east-1"
+#   app: "docker-react"
+#   env: "DockerReact-env"
+#   bucket_name: "elasticbeanstalk-us-east-1-787114486602"
+#   bucket_path: "docker-react"
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
