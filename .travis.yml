@@ -14,7 +14,7 @@ after_success:
   - docker build -t sami93/multi-server:latest ./server
   - docker build -t sami93/multi-worker:latest ./worker
   # Log in docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login docker.io -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push sami93/multi-client:latest
   - docker push sami93/multi-nginx:latest
