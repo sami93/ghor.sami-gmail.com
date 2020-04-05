@@ -9,17 +9,17 @@ script:
   - docker run -e CI=true sami93/react-test npm run test -- --coverage #coverage to exit tests suits
 
 after_success:
-  - docker build -t sami93/multi-client ./client
-  - docker build -t sami93/multi-nginx ./nginx
-  - docker build -t sami93/multi-server ./server
-  - docker build -t sami93/multi-worker ./worker
+  - docker build -t sami93/multi-client:latest ./client
+  - docker build -t sami93/multi-nginx:latest ./nginx
+  - docker build -t sami93/multi-server:latest ./server
+  - docker build -t sami93/multi-worker:latest ./worker
   # Log in docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push sami93/multi-client
-  - docker push sami93/multi-nginx
-  - docker push sami93/multi-server
-  - docker push sami93/multi-worker
+  - docker push sami93/multi-client:latest
+  - docker push sami93/multi-nginx:latest
+  - docker push sami93/multi-server:latest
+  - docker push sami93/multi-worker:latest
 
 # deploy:
 #   edge: true
