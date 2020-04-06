@@ -1,0 +1,24 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "samidocker93/multi-client:latest",
+            "hostname":"client", 
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "samidocker93/multi-server:latest",
+            "hostname":"api", 
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "samidocker93/multi-worker:latest",
+            "hostname":"worker", 
+            "essential": false
+        }
+        
+    ]
+}
