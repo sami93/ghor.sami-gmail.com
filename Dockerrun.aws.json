@@ -18,6 +18,19 @@
             "image": "samidocker93/multi-worker:latest",
             "hostname":"worker", 
             "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "samidocker93/multi-nginx:latest",
+            "hostname":"nginx", 
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]
         }
         
     ]
